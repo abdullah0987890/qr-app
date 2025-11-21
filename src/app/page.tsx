@@ -230,15 +230,6 @@ export default function Home() {
         {isScanning && (
           <div className="scanner-container">
             {isCameraRunning && <div id="qr-reader"></div>}
-            {isCameraRunning ? (
-              <button onClick={stopScanner} className="btn btn-danger">
-                Stop Scanner
-              </button>
-            ) : (
-              <button onClick={() => setIsCameraRunning(true)} className="btn btn-primary">
-                Start Camera
-              </button>
-            )}
           </div>
         )}
 
