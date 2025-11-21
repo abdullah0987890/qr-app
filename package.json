@@ -3,18 +3,30 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "export": "next export",
+    "pwa:export": "next build && next export",
+    "pwa:dev": "next dev",
+    "pwa:build": "next build",
+    "pwa:start": "next start",
+    "pwa:lint": "eslint",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "android:build": "npm run build && npx cap sync android",
+    "android:open": "npx cap open android"
   },
   "dependencies": {
+    "@capacitor/android": "^6.1.2",
+    "@capacitor/core": "^6.1.2",
     "html5-qrcode": "^2.3.8",
     "next": "16.0.3",
+    "next-pwa": "^5.6.0",
     "react": "19.2.0",
     "react-dom": "19.2.0"
   },
   "devDependencies": {
+    "@capacitor/cli": "^6.1.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

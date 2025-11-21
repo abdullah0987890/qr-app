@@ -39,3 +39,21 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Android
+android/app/build/
+android/app/release/
+android/build/
+android/.gradle/
+android/local.properties
+android/key.properties
+*.jks
+*.keystore
+
+# Capacitor
+.capacitor/
+ios/
+
+# Sensitive files - NEVER COMMIT THESE!
+qr-scanner-release-key.jks
+key.properties

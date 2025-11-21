@@ -1,7 +1,23 @@
-import type { NextConfig } from "next";
+/** @type {import('next').NextConfig} */
+import withPWA from "next-pwa";
 
-const nextConfig: NextConfig = {
-  /* config options here */
+const nextConfig = {
+  // 🔥 Disable Turbopack (required for next-pwa)
+  experimental: {
+    turbo: false,
+  },
+
+  // 🔥 Required for your export build
+  output: "export",
+
+  images: {
+    unoptimized: true,
+  },
 };
 
-export default nextConfig;
+export default withPWA({
+  dest: "public",
+  register: true,
+  skipWaiting: true,
+  disable: false, // PWA is enabled
+})(nextConfig);
