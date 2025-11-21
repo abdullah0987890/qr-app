@@ -126,10 +126,12 @@ export default function Home() {
         await html5QrCode.stop();
         await html5QrCode.clear();
         setIsCameraRunning(false);
+        setIsScanning(false);
         setHtml5QrCode(null);
       } catch (err) {
         console.error('Error stopping scanner:', err);
         setIsCameraRunning(false);
+        setIsScanning(false);
       }
     }
   };
