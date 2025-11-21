@@ -238,6 +238,9 @@ export default function Home() {
             {scanStatus === 'INVALID' && (
               <p className="warning">This QR code has already been scanned.</p>
             )}
+            <button onClick={startScanner} className="btn btn-primary" style={{ marginTop: '20px', width: '100%' }}>
+              Scan Next Code
+            </button>
           </div>
         )}
 
