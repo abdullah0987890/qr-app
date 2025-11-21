@@ -10,6 +10,7 @@ export default function Home() {
   const [loginError, setLoginError] = useState('');
 
   const [isScanning, setIsScanning] = useState(false);
+  const [isCameraRunning, setIsCameraRunning] = useState(false);
   const [scanResult, setScanResult] = useState<string | null>(null);
   const [scanStatus, setScanStatus] = useState<'VALID' | 'INVALID' | null>(null);
   const [html5QrCode, setHtml5QrCode] = useState<Html5Qrcode | null>(null);
@@ -20,19 +21,19 @@ export default function Home() {
 
   useEffect(() => {
     // Initialize scanner when isScanning becomes true
-    if (isScanning && !html5QrCode) {
+    if (isScanning && isCameraRunning && !html5QrCode) {
       initializeScanner();
     }
-  }, [isScanning]);
+  }, [isScanning, isCameraRunning]);
 
   useEffect(() => {
     // Cleanup scanner on unmount
     return () => {
-      if (html5QrCode && isScanning) {
+      if (html5QrCode && isCameraRunning) {
         html5QrCode.stop().catch(console.error);
       }
     };
-  }, [html5QrCode, isScanning]);
+  }, [html5QrCode, isCameraRunning]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,6 +65,7 @@ export default function Home() {
     setScanStatus(null);
     isProcessingScan.current = false; // Reset flag for new scan session
     setIsScanning(true);
+    setIsCameraRunning(true);
   };
 
   const initializeScanner = async () => {
@@ -114,6 +116,7 @@ export default function Home() {
 
       setCameraError(errorMessage);
       setIsScanning(false);
+      setIsCameraRunning(false);
     }
   };
 
@@ -122,11 +125,11 @@ export default function Home() {
       try {
         await html5QrCode.stop();
         await html5QrCode.clear();
-        setIsScanning(false);
+        setIsCameraRunning(false);
         setHtml5QrCode(null);
       } catch (err) {
         console.error('Error stopping scanner:', err);
-        setIsScanning(false);
+        setIsCameraRunning(false);
       }
     }
   };
@@ -224,10 +227,16 @@ export default function Home() {
 
         {isScanning && (
           <div className="scanner-container">
-            <div id="qr-reader"></div>
-            <button onClick={stopScanner} className="btn btn-danger">
-              Stop Scanner
-            </button>
+            {isCameraRunning && <div id="qr-reader"></div>}
+            {isCameraRunning ? (
+              <button onClick={stopScanner} className="btn btn-danger">
+                Stop Scanner
+              </button>
+            ) : (
+              <button onClick={() => setIsCameraRunning(true)} className="btn btn-primary">
+                Start Camera
+              </button>
+            )}
           </div>
         )}
 
